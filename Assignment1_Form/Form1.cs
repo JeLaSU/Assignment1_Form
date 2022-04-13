@@ -30,6 +30,8 @@ namespace Assignment1_Form
 
         MusicPlayer player = new MusicPlayer();
 
+        //Thread trd = new Thread(new ThreadStart(player.open));
+
         bool clockStop;
 
         public Form1()
