@@ -7,21 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace Assignment1_Form
 {
     // TODO: Add variables and fill in code
 
-    //private Thread trd; 
-
     /// <summary>
     /// The GUI for playing music and starting two graphical threads
     /// </summary>
+
+    
+
     public partial class Form1 : Form
     {
         /// <summary>
         /// Constructor. 
         /// </summary>
+     
+        //[DllImport("winmm.dll")]
+        //private static extern long mciSendString(string Command, StringBuilder lpstrReturnString, int uReturnLength, int hwndCallback);
+
         MusicPlayer player = new MusicPlayer();
 
         bool clockStop;
@@ -40,11 +46,18 @@ namespace Assignment1_Form
         {
             //Thread trd = new Thread(t =>
             //{
-                openFileDialog1.ShowDialog();
-            //})
-            //{ IsBackground = true };
-            //trd.Start();
+            openFileDialog1.ShowDialog();
+
+            /*
+             * 
+             * Skapa tråd, dela upp i olika if-satser som gås igenom beroende på variablar som förändras vid play/open/stop
+             * 
+             */
+
             
+            
+            //});
+            //trd.Start();
         }
 
         /// <summary>
@@ -52,9 +65,15 @@ namespace Assignment1_Form
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e) //, string file
         {
             label1.Text = openFileDialog1.FileName;
+
+            //string command = "open \"" + file + "\" type MPEGVideo alias MyMp3";
+            //mciSendString(command, null, 0, 0); 
+
+            //openingFile = true;
+
             player.open(openFileDialog1.FileName);
         }
 
@@ -65,7 +84,11 @@ namespace Assignment1_Form
         /// <param name="e"></param>
         private void btnPlay_Click(object sender, EventArgs e)
         {
+            //string command = "play MyMp3";
+            //mciSendString(command, null, 0, 0); 
             player.play();
+
+            //playingMusic = true;
         }
 
         /// <summary>
@@ -75,7 +98,11 @@ namespace Assignment1_Form
         /// <param name="e"></param>
         private void btnMp3Stop_Click(object sender, EventArgs e)
         {
+            //string command = "stop MyMp3";
+            //mciSendString(command, null, 0, 0); 
             player.stop();
+
+            //playingMusic = false;
         }
 
         /// <summary>
@@ -123,29 +150,20 @@ namespace Assignment1_Form
             clockStop = false;
 
             //Ny tråd skapas
-            Thread trd = new Thread(t =>
+            Thread clkTrd = new Thread(t =>
             {
-                if (clockStop == false)
+                //Programmet kollar om 'stop' knappen har klickats medans klockan går.
+                while (clockStop == false)
                 {
-                    for (int i = 0; i < 10000; i++)
-                    {
                         Invoke(new MethodInvoker(delegate ()
                         { //texten i label "lblClock" ändras till nuvarande klockslag varje gång tråden är aktiv(en gång i sekunden).
                         lblClock.Text = DateTime.Now.ToString("T");
                         }));
                         Thread.Sleep(1000);
-                    }
-                }
-                
-                //if (btnDisplayStop_Click)
-                //{
-
-                //}
-
-                
+                }               
             })
             { IsBackground = true };
-                trd.Start();
+                clkTrd.Start();
         }
 
         /// <summary>
@@ -156,7 +174,6 @@ namespace Assignment1_Form
         private void btnDisplayStop_Click(object sender, EventArgs e)
         {
             clockStop = true;
-            //clock.stop();
         }
 
         /// <summary>
@@ -194,24 +211,9 @@ namespace Assignment1_Form
 
         }
 
-        //private void ThreadTask()
-        //{
-        //    int stp;
-        //    int newval;
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
 
-        //    Random rnd = new Random();
-
-        //    while (true)
-        //    {
-        //        //Invoke(new MethodInvoker(delegate ()
-        //        //{
-        //        //lblClock.Text = DateTime.Now.ToString("T");
-        //        //}
-
-        //        //timer.Elapsed += Timer_Elapsed;
-
-        //        Thread.Sleep(1000);
-        //    }
-        //}
+        }
     }
 }

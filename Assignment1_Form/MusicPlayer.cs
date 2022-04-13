@@ -24,9 +24,6 @@ namespace Assignment1_Form
         {
             string command = "stop MyMp3";
             mciSendString(command, null, 0, 0);
-
-            command = "close MyMp3";
-            mciSendString(command, null, 0, 0);
         }
     }
 }
