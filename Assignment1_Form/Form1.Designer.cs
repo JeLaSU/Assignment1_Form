@@ -38,6 +38,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblmp3 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblClock = new System.Windows.Forms.Label();
             this.btnDisplayStop = new System.Windows.Forms.Button();
             this.btnDisplay = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -52,7 +53,6 @@
             this.btnGo = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbSkill = new System.Windows.Forms.ComboBox();
-            this.lblClock = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -151,6 +151,18 @@
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Display Thread";
+            // 
+            // lblClock
+            // 
+            this.lblClock.AutoSize = true;
+            this.lblClock.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClock.Location = new System.Drawing.Point(29, 102);
+            this.lblClock.Name = "lblClock";
+            this.lblClock.Size = new System.Drawing.Size(159, 39);
+            this.lblClock.TabIndex = 3;
+            this.lblClock.Text = "00:00:00";
+            this.lblClock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblClock.Click += new System.EventHandler(this.label4_Click);
             // 
             // btnDisplayStop
             // 
@@ -296,18 +308,6 @@
             this.cmbSkill.Size = new System.Drawing.Size(61, 21);
             this.cmbSkill.TabIndex = 0;
             // 
-            // lblClock
-            // 
-            this.lblClock.AutoSize = true;
-            this.lblClock.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClock.Location = new System.Drawing.Point(29, 102);
-            this.lblClock.Name = "lblClock";
-            this.lblClock.Size = new System.Drawing.Size(159, 39);
-            this.lblClock.TabIndex = 3;
-            this.lblClock.Text = "00:00:00";
-            this.lblClock.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lblClock.Click += new System.EventHandler(this.label4_Click);
-            // 
             // timer1
             // 
             this.timer1.Interval = 1000;
@@ -330,6 +330,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Multiple thread demonstator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

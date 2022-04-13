@@ -24,12 +24,11 @@ namespace Assignment1_Form
         /// </summary>
         MusicPlayer player = new MusicPlayer();
 
+        bool clockStop;
+
         public Form1()
         {
-            InitializeComponent();
-            //Thread trd = new Thread(new ThreadStart(this.ThreadTask));
-            //trd.IsBackground = true;
-            //trd.Start();
+            InitializeComponent();            
         }
 
         /// <summary>
@@ -39,7 +38,13 @@ namespace Assignment1_Form
         /// <param name="e"></param>
         private void Open_Click(object sender, EventArgs e)
         {
-            openFileDialog1.ShowDialog();
+            //Thread trd = new Thread(t =>
+            //{
+                openFileDialog1.ShowDialog();
+            //})
+            //{ IsBackground = true };
+            //trd.Start();
+            
         }
 
         /// <summary>
@@ -110,29 +115,37 @@ namespace Assignment1_Form
         /// Start the thread
         /// </summary>
         /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="e"></param>       
+
         private void btnDisplay_Click(object sender, EventArgs e)
         {
-            
-            
-            //När man klickar "Start display" på klockan så startas en timer som redigerar 
-            System.Timers.Timer timer = new System.Timers.Timer();
-            
-            //ta bort timer etc o ersätt ist med aktivera en thread som direkt gör thread.sleep(1000)
-            //och sedan får invoke förändringen i texten via timer_elapsed
+            //clock.start();
+            clockStop = false;
 
-            //varje gång ett interval på 1000 millisekunder har förflutit så kallas metoden "Timer_Elapsed"
-            timer.Interval = 1000;                      
-            timer.Elapsed += Timer_Elapsed; 
-            timer.Start();
-        }
+            //Ny tråd skapas
+            Thread trd = new Thread(t =>
+            {
+                if (clockStop == false)
+                {
+                    for (int i = 0; i < 10000; i++)
+                    {
+                        Invoke(new MethodInvoker(delegate ()
+                        { //texten i label "lblClock" ändras till nuvarande klockslag varje gång tråden är aktiv(en gång i sekunden).
+                        lblClock.Text = DateTime.Now.ToString("T");
+                        }));
+                        Thread.Sleep(1000);
+                    }
+                }
+                
+                //if (btnDisplayStop_Click)
+                //{
 
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            Invoke(new MethodInvoker(delegate()
-            { //texten i label "lblClock" ändras till nuvarande datum
-                lblClock.Text = DateTime.Now.ToString("T");
-            }));
+                //}
+
+                
+            })
+            { IsBackground = true };
+                trd.Start();
         }
 
         /// <summary>
@@ -142,7 +155,8 @@ namespace Assignment1_Form
         /// <param name="e"></param>
         private void btnDisplayStop_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
+            clockStop = true;
+            //clock.stop();
         }
 
         /// <summary>
@@ -171,6 +185,11 @@ namespace Assignment1_Form
         }
 
         private void timer1_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }
