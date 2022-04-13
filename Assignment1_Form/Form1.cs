@@ -84,11 +84,21 @@ namespace Assignment1_Form
         /// <param name="e"></param>
         private void btnPlay_Click(object sender, EventArgs e)
         {
-            //string command = "play MyMp3";
-            //mciSendString(command, null, 0, 0); 
-            player.play();
-
-            //playingMusic = true;
+            //Ny tråd skapas
+            Thread mp3Trd = new Thread(t =>
+            {
+                //while (playingMusic == false)
+                //{
+                    Invoke(new MethodInvoker(delegate ()
+                    { //mp3 fil spelas upp.
+                        player.play(); //mciSendString(command, null, 0, 0);
+                    }));
+                //}
+            })
+            { IsBackground = true };
+            mp3Trd.Start();
+            
+            
         }
 
         /// <summary>
