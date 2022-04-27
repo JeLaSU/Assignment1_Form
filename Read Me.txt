@@ -1,0 +1,1 @@
+To make the typing function to work, you need to start with opening a txt file. Each work needs to have a seperate row.
